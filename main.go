@@ -67,7 +67,10 @@ func main() {
 	go cfg.crawlPage(rawBaseURL)
 	cfg.wg.Wait()
 
-	for key, value := range cfg.pages {
-		fmt.Printf("%s: %s\n", key, value.Heading)
+	fmt.Println("Exporting results...")
+	err = writeJSONReport(cfg.pages, "report.json")
+	if err != nil {
+		fmt.Printf("Error - writeJSONReport: %v\n", err)
 	}
+	fmt.Println("Export complete")
 }
